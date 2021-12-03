@@ -1,0 +1,31 @@
+---
+# Generally to debug SELinux problems, see /var/log/audit and /var/log/messages.
+# Ansible Galaxy module ansible.posix is required for setsebool functionality.
+# Install on control node with:
+#   ansible-galaxy collection install ansible.posix
+# See: https://galaxy.ansible.com/ansible/posix?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW
+
+# Ansible management of SE flags depends on these
+- name: Install Python packages needed for SELinux 
+  dnf:
+    name: [python3-libselinux, python3-libsemanage]
+    state: latest
+
+- name: Set SELinux to enforcing mode (targeted policy)
+  selinux:
+    policy: targeted
+    # Choose enforcing or permissive; reboot needed when changing
+    state: enforcing
+    #state: permissive
+
+- name: Install SELinux management packages
+  dnf:
+    name: [policycoreutils-python-utils, setools-console, setroubleshoot-server]
+    state: latest
+    update_cache: yes
+
+#- name: Enable httpd_can_network_connect, persistent
+#  ansible.posix.seboolean:
+#    name: httpd_can_network_connect
+#    state: yes
+#    persistent: yes

@@ -1,0 +1,19 @@
+---
+- name: Install NTP client/server software
+  dnf:
+    name: chrony
+    state: latest
+    update_cache: yes
+
+- name: Enable NTP service
+  service:
+    name: chronyd
+    enabled: yes
+    state: started
+
+- name: Copy NTP config file
+  copy:
+    src: chrony.conf
+    dest: /etc/chrony.conf
+  notify: Restart Chrony
+

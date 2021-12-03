@@ -1,0 +1,22 @@
+---
+- name: Copy custom bash scripts into place for Ansible playbook user
+  copy:
+    src: "user{{ item }}"
+    dest: "/home/{{ playbook_user }}/{{ item }}"
+    owner: "{{ playbook_user }}"
+    group: "{{ playbook_user }}"
+    mode: 0644
+  with_items:
+    - .bash_profile
+    - .bashrc
+
+- name: Copy custom bash scripts into place for root user
+  copy:
+    src: 'root{{ item }}'
+    dest: '/root/{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - .bash_profile
+    - .bashrc

@@ -1,0 +1,23 @@
+---
+- name: Create mount points for playbooks
+  file:
+    path: "/home/{{ playbook_user }}/playbooks"
+    state: directory
+    owner: "{{ playbook_user }}"
+    group: "{{ playbook_user }}"
+
+- name: Install credentials file
+  template:
+    src: fstab.creds.j2
+    dest: "/home/{{ playbook_user }}/.fstab.creds"
+    owner: "{{ playbook_user }}"
+    group: "{{ playbook_user }}"
+    mode: 0600
+
+- name: Mount playbooks from laptop
+  ansible.posix.mount:
+    src: "{{ windows_share }}"
+    path: "/home/{{ playbook_user }}/playbooks"
+    opts: "defaults,soft,cache=loose,uid={{ playbook_user }},gid={{ playbook_user }},file_mode=0770,dir_mode=0770,credentials=/home/{{ playbook_user }}/.fstab.creds"
+    state: mounted
+    fstype: cifs

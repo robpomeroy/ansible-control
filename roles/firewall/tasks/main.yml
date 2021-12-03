@@ -1,0 +1,7 @@
+---
+- name: Alllow SSH through firewall
+  firewalld:
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: true

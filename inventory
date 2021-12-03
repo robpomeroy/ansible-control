@@ -1,0 +1,6 @@
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[targets]
+# Amend/add as required, based on the host[s] you're configuring
+TARGET.SYSTEM.ADDRESS system_hostname=ansible-control.local

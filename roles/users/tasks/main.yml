@@ -1,0 +1,24 @@
+---
+- name: wheel group must exist
+  group:
+    name: wheel
+    state: present
+
+- name: Give passwordless sudo to wheel group (validate with visudo program)
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: /sbin/visudo -cf %s
+
+- name: Add Ansible playbook user to wheel group
+  user:
+    name: "{{ playbook_user }}"
+    groups: [wheel]
+    append: yes
+
+- name: Disable Ansible playbook user's password (login through SSH key only)
+  user:
+   name: "{{ playbook_user }}"
+   password: "*"

@@ -1,0 +1,17 @@
+---
+- name: Ensure .ssh directory exists
+  file:
+    path: "/home/{{ playbook_user }}/.ssh"
+    state: directory
+    owner: "{{ playbook_user }}"
+    group: "{{ playbook_user }}"
+    mode: 0700
+
+- name: Copy SSH keys
+  copy:
+    src: ansible.privkey
+    dest: "/home/{{ playbook_user }}/.ssh/ansible.privkey"
+    owner: "{{ playbook_user }}"
+    group: "{{ playbook_user }}"
+    mode: 0600
+    decrypt: yes
