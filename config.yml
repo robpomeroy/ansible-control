@@ -1,6 +1,5 @@
 ---
 server_timezone: Europe/London # For acceptable entries here, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
-# Used for generation of GPG key pair
-user_email: rob.pomeroy@intech.co.uk
-user_name: Rob Pomeroy
+# Amend this share specification, to be mounted by fstab
+windows_share: //MACHINE.IP.HERE/Ansible
