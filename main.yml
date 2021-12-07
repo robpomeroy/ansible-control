@@ -49,8 +49,8 @@
       tags: [selinux, security]
     - role: firewall
       tags: [firewall, security]
-    - role: step-client
-      tags: [step, security]
+    - role: ssh
+      tags: [ssh, crypto, security, orch]
 
     # External hardening roles
     - role: devsec.hardening.os_hardening
@@ -64,15 +64,3 @@
     # Configure users
     - role: users
       tags: [users]
-
-    # AWS-Vault on Linux depends on GPG keys; creating these requires entropy
-    - role: entropy
-      tags: [entropy, rngd, crypto]
-    - role: gpg
-      tags: [gpg, crypto, security]
-
-    # Orchestration
-    - role: ssh
-      tags: [ssh, crypto, security, orch]
-    - role: aws
-      tags: [aws, orch]
