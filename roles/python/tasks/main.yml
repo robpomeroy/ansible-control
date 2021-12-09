@@ -2,5 +2,5 @@
 - name: Install Pip modules
   pip:
     executable: pip3
-    name: [ansible, docker, jmespath, netaddr]
+    name: [ansible, docker, jmespath, netaddr, pywinrm, requests-credssp]]
     
