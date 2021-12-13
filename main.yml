@@ -10,9 +10,9 @@
     - config.yml
     - secrets.yml # Should be encrypted
 
-  # Several roles need to know the "real" Ansible user. These pre-tasks make
-  # that possible.
   pre_tasks:
+    # Several roles need to know the "real" Ansible user. These pre-tasks make
+    # that possible.
     - name: Get currently logged-in user
       become: false
       command: whoami
@@ -22,6 +22,16 @@
     - name: Make currently logged-in user available as "playbook_user" variable
       set_fact:
         playbook_user: "{{ whoami_output.stdout }}"  
+      tags: always
+
+    # WSL tests
+    - name: Get process one (to see if running under systemd)
+      command: ps -p 1 -o comm=
+      register: ps1_output
+      tags: always
+    - name: Make process controller available as "process_controller" variable
+      set_fact:
+        process_controller: "{{ ps1_output.stdout }}"  
       tags: always
 
   tasks:
@@ -37,18 +47,22 @@
       tags: [packages, init]
     - role: fstab
       tags: [fstab, init]
+      when: process_controller == 'systemd' # Not for WSL (which uses init)
     - role: python
       tags: [python, init]
     - role: ntp
       tags: [ntp, time, init]
+      when: process_controller == 'systemd' # This is a systemd role (not WSL)
     - role: name
       tags: [name, init]
+      when: process_controller == 'systemd' # No need to set hostname under WSL
 
     # Security
     - role: selinux
       tags: [selinux, security]
     - role: firewall
       tags: [firewall, security]
+      when: process_controller == 'systemd' # Firewall not relevant to WSL
     - role: ssh
       tags: [ssh, crypto, security, orch]
 

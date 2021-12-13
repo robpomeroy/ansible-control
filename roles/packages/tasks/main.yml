@@ -47,6 +47,7 @@
     - chrony
     - cifs-utils
     - git
+    - golang # Needed by fzf installer; not available by default under WSL
     - gpg
     - jq
     - lynx
@@ -58,6 +59,7 @@
     - python3
     - python3-pip
     - python3-setuptools # required to pip3 install ansible
+    - tar # Needed by fzf installer; not available by default under WSL
     - traceroute
     - tmux
     - unzip

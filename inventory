@@ -4,3 +4,6 @@ ansible_python_interpreter=/usr/bin/python3
 [targets]
 # Amend/add as required, based on the host[s] you're configuring
 TARGET.SYSTEM.ADDRESS system_hostname=ansible-control.local
+
+# Or running against a local host, e.g. for WSL:
+#localhost system_hostname=ansible-control.local ansible_connection=local

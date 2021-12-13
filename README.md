@@ -21,20 +21,22 @@ vi/emacs/nano?!
 ### Target system
 
 Edit the `inventory` file, to specify the address of the target system (which
-could be the same machine on which you run this playbook).
+could be the same machine on which you run this playbook - including WSL).
 
 ### Fstab
 
 The fstab role facilitates mounting a Windows share to the Ansible control node.
 This makes it possible to edit playbooks using a Windows machine (with Visual
-Studio Code, for example), while running the playbook using Linux - either a
-separate Linux machine, or the Windows Subsystem for Linux. Amend
+Studio Code, for example), while running the playbook using Linux. Amend
 `windows_share` to suit, in the `config.yml` file.
 
 This Windows share containing the playbooks should be writable by the control
 node. Having shared the folder from the Windows machine, place the Windows user
 credentials in `secrets.yml` and encrypt that file with Ansible Vault (see
 below).
+
+This isn't really necessary for WSL, since you can mount all drives to `/mnt`,
+as required.
 
 ### SSH
 
@@ -58,6 +60,17 @@ And to decrypt:
     ansible-vault decrypt --vault-id ~/vault-password [secrets.yml]
 
 Remember not to leave files unecrypted. Make changes and re-encrypt immediately.
+
+## WSL
+
+This playbook works for WSL - running against itself. WSL differs from a
+'normal' installation, e.g. in the fact it does not use systemd. I use that fact
+to detect whether the playbook is running against WSL, and to avoid tasks that
+are irrelevant on WSL. See the "Get process one (to see if running under
+systemd)" pre-task in `main.yml`.
+
+Note that this playbook is for the Red Hat family of OSes. Setting up a Red Hat
+WSL distro (not available in the Windows Store) is a separate exercise!
 
 ## Requirements
 This playbook makes use of external roles. Install these by running the
