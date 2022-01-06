@@ -44,25 +44,29 @@
 - name: Install preferred packages
   dnf:
     name:
-    - chrony
-    - cifs-utils
-    - git
-    - golang # Needed by fzf installer; not available by default under WSL
-    - gpg
-    - jq
-    - lynx
-    - micro
-    - net-tools
-    - nmap
-    - pass
-    - perl
-    - python3
-    - python3-pip
-    - python3-setuptools # required to pip3 install ansible
-    - tar # Needed by fzf installer; not available by default under WSL
-    - traceroute
-    - tmux
-    - unzip
+      - bind-utils # for nslookup
+      - chrony
+      - cifs-utils
+      - git
+      - golang # Needed by fzf installer; not available by default under WSL
+      - gpg
+      - jq
+      - lynx
+      - micro
+      - mlocate
+      - net-tools
+      - nmap
+      - pass
+      - perl
+      - python3
+      - python3-pip
+      - python3-setuptools # required to pip3 install ansible
+      - sshpass # needed to use passwords with Ansible connections
+      - tar # Needed by fzf installer; not available by default under WSL
+      - telnet # helpful for debugging
+      - traceroute
+      - tmux
+      - unzip
     state: latest
     update_cache: yes
 
