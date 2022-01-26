@@ -67,6 +67,7 @@
       - traceroute
       - tmux
       - unzip
+      - whois
     state: latest
     update_cache: yes
 
