@@ -1,0 +1,6 @@
+---
+- name: Enabled and start systemd-resolve
+  service:
+    name: systemd-resolved
+    state: started
+    enabled: yes

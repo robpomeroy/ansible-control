@@ -56,6 +56,9 @@
     - role: name
       tags: [name, init]
       when: process_controller == 'systemd' # No need to set hostname under WSL
+    - role: dns
+      tags: [systemd, resolved, dns]
+      when: process_controller == 'systemd'
 
     # Security
     - role: selinux
